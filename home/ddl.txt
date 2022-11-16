@@ -1,0 +1,21 @@
+CREATE TABLE Student_info
+(
+College_Id number(2),
+College_name varchar(30),
+Branch varchar(10)
+);
+
+ALTER TABLE table_name
+ADD column_name datatype;
+
+TRUNCATE TABLE table_name;
+
+DROP TABLE table_name;
+
+RENAME TABLE table_name TO new_table_name;
+
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+
+
+create view view_name as select * from table_name where ***.

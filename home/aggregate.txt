@@ -1,0 +1,22 @@
+
+> db.Student.aggregate({$group:{_id:"$Name","Total":{$sum:"$Marks"}}});
+
+> db.Student.aggregate({$group:{_id:"$Name","Total":{$min:"$Marks"}}});
+
+> db.Student.aggregate({$group:{_id:"$Name","Total":{$avg:"$Marks"}}});
+
+> db.Student.aggregate({$group:{_id:"$Name","Total":{$max:"$Marks"}}});
+
+> db.Student.aggregate({$group:{_id:"$Name","Total":{$first:"$Marks"}}});
+
+> db.Student.aggregate({$group:{_id:"$Name","Total":{$push:"$Marks"}}});
+
+> db.Student.aggregate({$group:{_id:"$Name","Total":{$sum:1}}});
+
+> db.website1.createIndex({'name':1})
+
+> db.website1.createIndex({'name':-1})
+
+> db.website1.getIndexes()
+
+> db.website.dropIndex({'name':-1})

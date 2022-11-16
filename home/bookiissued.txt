@@ -1,0 +1,3 @@
+create procedure B_2(Roll_new int, book_name varchar(20))
+begin declare x int; declare continue handler for not found begin select 'NOT FOUND'; end; select datediff(curdate(),DateofIssue) into x from Borrower where Roll_no=Roll_new; if(x>15 && x<30) then insert into Fine values(Roll_new, curdate(), (x*5)); end if; if(x>30) then insert into Fine values(Roll_new, curdate(),(x*50)); end if; update Borrower set Status="Returned" where Roll_no=Roll_new; end;//
+

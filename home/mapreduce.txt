@@ -1,0 +1,11 @@
+
+{ "_id" : ObjectId("6373bf372548e65ef1c6b446"), "name" : "mahesh", "age" : 25, "rank" : 1 }
+{ "_id" : ObjectId("6373bf372548e65ef1c6b447"), "name" : "pranav", "age" : 24, "rank" : 2 }                             
+{ "_id" : ObjectId("6373bf372548e65ef1c6b448"), "name" : "prathamesh", "age" : 23, "rank" : 4 }                         
+{ "_id" : ObjectId("6373bf372548e65ef1c6b449"), "name" : "yash", "age" : 25, "rank" : 7 }                               
+{ "_id" : ObjectId("6373bf612548e65ef1c6b44a"), "name" : "mahes", "age" : 25, "rank" : 6 }                              
+{ "_id" : ObjectId("6373bf612548e65ef1c6b44b"), "name" : "prana", "age" : 24, "rank" : 3 }
+
+> var mapfunction=function(){emit(this.name,this.marks)};
+> var reducefunction=function(name,marks){return Array.sum(marks)};
+> db.new.find().pretty();

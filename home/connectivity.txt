@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <centre>
+      <h1>Students Database site</h1>
+    </centre>
+  </head>
+  <body bgcolor="cyan">
+    <h2 align="center">You can submit your data here</h2>
+    <form align="center" name="form1" action="insert.php" method="POST">
+      Name:<input type="text" name="name" /><br /><br />
+      Class:<input type="text" name="class" /><br /><br />
+      roll_no:<input type="int" name="roll_no" /><br /><br />
+      DOB:<input type="date" name="DOB" /><br /><br />
+      <input type="submit" name="submit" />
+    </form>
+    <br />
+    <br />
+    <h2 align="center">You can search your data here</h2>
+    <form align="center" name="form2" action="search.php" method="POST">
+      To Search by Name:<input type="text" name="name" />
+      <input type="submit" name="search" value="search" />
+    </form>
+    <form align="center" name="form3" action="delete.php" method="POST">
+      To Delete by Name:<input type="text" name="name" />
+      <input type="submit" name="delete" value="delete" />
+    </form>
+  </body>
+</html>
+
+
+<?php
+$name=$_POST['name'];
+$class=$_POST['class'];
+$roll_no=$_POST['roll_no'];
+$DOB=$_POST['DOB'];
+
+$servername="localhost";
+$username="root"; 
+$password=""; 
+$dbname="phpmysql";
+
+//create connection  
+$conn=mysqli_connect($servername,$username,$password,$dbname);  
+//check connection  
+if(!$conn){      
+     die("connection failed: ".mysqli_connect_error());
+  }
+//create sql insert query to insert form values into database 
+$sql="INSERT INTO details(name,class,roll_no,DOB)
+VALUES"('$name','$class','$roll_no','$DOB')";
+
+if(mysqli_query($conn,$sql))
+{     
+     echo"New data inserted successfully."; 
+} else{     
+     echo"Unsuccessful operation,sorry!"; 
+} 
+mysqli_close($conn);
+?>
+
+<?php
+$name=$_POST['name&'']; 
+$servername="localhost"; 
+$username="root";
+
+$password="";
+$dbname="phpmysql";  
+//create connection  
+$conn=mysqli_connect($servername,$username,$password,$dbname);  
+//check connection  
+if(!$conn){      
+     die("connection failed: ".mysqli_connect_error());
+  }
+
+// create query to delete form values into database 
+$sql="DELETE FROM details WHERE name='$name'"; 
+//run select query 
+$result=mysqli_query($conn,$sql); 
+if(!($result)){     
+     echo"Sorry no data found."; 
+} else {     
+     echo "Record deleted successfully!!"; 
+} 
+mysqli_close($conn);
+?>
+
+//Search
+
+<?php
+//retreiving form value using form variable
+$name=$_POST['name'];
+
+$servername="localhost"; 
+$username="root"; 
+$password=""; 
+$dbname="phpmysql";  
+//create connection  
+$conn=mysqli_connect($servername,$username,$password,$dbname);  
+//check connection  
+if(!$conn){      
+     die("connection failed: ".mysqli_connect_error());  
+}  
+// create query to search form values into database 
+$sql="SELECT * FROM details WHERE name='$name'"; 
+//run select query 
+$result=mysqli_query($conn,$sql); 
+if(!($result)){     
+     echo"Sorry no data found."; 
+}
+else 
+$num_row=mysqli_num_rows($result); 
+echo $num_row; 
+echo " records found in the Database<br>";
+
+
+for($i=0;$i<$num_row;$i++){     
+     $rname=mysqli_fetch_row($result);     
+     echo "<h1>";     
+     echo  "Name is ".$rname[0];
+     echo "<br>";     
+     echo  "Class is ".$rname[1];     
+     echo "<br>";     
+     echo  "Roll no. is ".$rname[2];     
+     echo "<br>";     
+     echo  "DOB is ".$rname[3];     
+     echo "<br>";     
+     echo "</h1>"; 
+} 
+mysqli_close($conn);
+?>
