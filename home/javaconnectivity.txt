@@ -1,0 +1,125 @@
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.FindIterable;
+import org.bson.Document; 
+import com.mongodb.MongoClient;
+import java.util.Scanner;
+import java.util.Iterator;
+
+public class MongoJava {
+	private static Scanner sc;
+	public static void main (String args[]) {
+		MongoCollection<Document> collection=null;
+		try {
+			// Creating a Mongo client 
+		      MongoClient mongo = new MongoClient( "localhost" , 27017 ); 
+		   // Accessing the database 
+		      MongoDatabase database = mongo.getDatabase("Institute");
+		      System.out.println("Connected to the database successfully");
+		   //Creating a collection 
+		     // database.createCollection("Students"); 
+		      //System.out.println("Collection Students created successfully"); 
+		   // Retrieving a collection
+		      collection = database.getCollection("Students"); 
+		      System.out.println("Collection Students selected successfully"); 
+			
+		sc = new Scanner(System.in);  
+		int choice;  
+		do {
+		System.out.println("\n1. Insert Document \n2. Delete Document \n3. Update Document \n4. Display All \n5. Display marks>75 \n6. Exit \nEnter your choice :");
+		choice = sc.nextInt();
+		switch (choice) {
+		case 1:insert(collection);
+		break;
+		case 2: deletedoc(collection);
+		break;
+		case 3: updatedoc(collection);
+		break;
+		case 4: displayAll(collection);
+		break;
+		case 5:display(collection);
+		break;
+		case 6: System.out.println("Exiting Program");
+	    System.exit(0);
+	    break;
+		default:
+	        System.out.println(choice + " is not a valid Menu Option! Please Select Another.");
+
+		}
+		}while(choice != 6 /*Exit loop when choice is 6*/);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	public static void insert(MongoCollection<Document> collection) {
+		System.out.println("Inserting document");
+		Document document = new Document(); 
+		Scanner sc=new Scanner(System.in); 
+		System.out.println("Enter roll no:");
+		int rollno = sc.nextInt();
+		System.out.println("Enter name:");
+		String name= sc.next();  
+		System.out.println("Enter class:");
+		String classs=sc.next();
+		System.out.println("Enter marks:");
+		int marks= sc.nextInt();  
+		System.out.println("Enter technical interests:");
+		String techint=sc.next();
+		document.append("roll_no",rollno);
+		document.append("name",name);
+		document.append("class",classs);
+		document.append("marks",marks);
+		document.append("technical_interests",techint);
+		collection.insertOne(document);
+		System.out.println("Document inserted successfully");
+	}
+	public static void deletedoc(MongoCollection<Document> collection) {
+		System.out.println("Deleting document");
+		Document document = new Document(); 
+		System.out.println("Enter roll no:");
+		Scanner sc=new Scanner(System.in); 
+		int rollno= sc.nextInt();  
+		document.put("roll_no",rollno);
+		collection.deleteOne(document);
+		System.out.println("Document deleted successfully");
+	}
+	public static void updatedoc(MongoCollection<Document> collection) {
+		System.out.println("Updating document");
+		
+		Document newdocument = new Document(); 
+		System.out.println("Enter roll no:");
+		Scanner sc=new Scanner(System.in); 
+		int rollno = sc.nextInt();  
+		newdocument.put("roll_no",rollno);
+		System.out.println("Enter New marks:");
+		int marks = sc.nextInt();
+		collection.updateOne(newdocument,Updates.set("marks", marks));
+	}
+	
+	public static void display(MongoCollection<Document> collection) {
+ 		System.out.println("Displaying documents in collection having marks greater than 75");
+		// Getting the iterable object
+		Document query=new Document();
+		query.append("marks",new Document().append("$gt", 75));
+		FindIterable<Document> iterDoc = collection.find(query);
+		// Getting the ite4rator
+		Iterator it = iterDoc.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+}
+	public static void displayAll(MongoCollection<Document> collection) {
+		System.out.println("Displaying all documents in collection");
+		// Getting the iterable object
+		FindIterable<Document> iterDoc = collection.find();
+		int i = 1;
+		// Getting the ite4rator
+		Iterator it = iterDoc.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+			i++;
+		}
+}
+}
