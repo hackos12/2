@@ -1,0 +1,8 @@
+db.collection.insertOne({});
+db.collection.insertMany([{}]);
+
+db.collection.updateOne()
+
+db.BooksDB.updateOne({author: "S.A. Barnes"}, {$set:{author: "Stacey Kade Barnes"}})
+
+db.BooksDB.deleteOne({name:"Christopher Robert Cargill"})
