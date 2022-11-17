@@ -8,4 +8,11 @@
 
 > var mapfunction=function(){emit(this.name,this.marks)};
 > var reducefunction=function(name,marks){return Array.sum(marks)};
+db.employee.mapReduce(map,reduce,{out :"resultCollection1"});
 > db.new.find().pretty();
+
+
+var map=function(){ emit(this.age,this.rank)};
+var reduce=function(age,rank){ return Array.avg(rank);};
+db.employee.mapReduce(map,reduce,{out :"resultCollection3"});
+db.resultCollection3.find()
