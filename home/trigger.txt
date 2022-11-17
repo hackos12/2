@@ -1,9 +1,7 @@
 
 create  table library(bno int, bname varchar(20), author varchar(20), allowed_days int);
 
-insert into library values(1,"Java","Mr. Patil",10);
-insert into library values(2,"VB","Mr. Sharma",15);
-insert into library values(3,"CPP","Mr. Surve",15);
+insert into library values(1,"Java","Mr. Patil",10),(2,"VB","Mr. Sharma",15),(3,"CPP","Mr. Surve",15);
 
 create table library_audit(bno int, old_allowed_days int, new_allowed_days int);
 
